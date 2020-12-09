@@ -4,14 +4,6 @@ var activePlayer = 0;
 var scores = [0, 0];
 // Tsugluulsan shoo xayax eeljindee tsugluulsan onoog xadgalax xuwisag
 var roundScore = 0;
-// Shoonii ali talaaraa buussaniig xadgalax xuwisagch mon 1-6 toonii sanamsargvi utga uusgene
-//var diceNumber = Math.floor(Math.random() * 6) + 1;
-
-// <div class="player-score" id="score-0">10</div>
-// window.document.querySelector("#score-0").textContent = dice;
-// <div class="player-score" id="score-1">10</div>
-// document.querySelector("#score-1").textContent = dice;
-//<img src="dice-5.png" alt="Dice" class="dice" />
 
 //Programaa exlexed yamar baixiig beldey
 
@@ -42,23 +34,47 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
     roundScore = roundScore + diceNumber;
     document.getElementById("current-" + activePlayer).textContent = roundScore;
   } else {
-    //  Toglogchiin shoo 1 buusan tul tsugluulsan toog ni 0 bolgono
-    document.getElementById("current-" + activePlayer).textContent = 0;
-
-    // 1 buuwal daraagiin toglogchruugaa shoog shiljuulj tsugluulsan toonuudig ustgax
-    // xerew idewxitei toglogch 0 bwal 1 bolgoj, 1 baiwal 0 bolgox
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-    // if (activePlayer === 0) {
-    //   activePlayer = 1;
-    // } else {
-    //   activePlayer = 0;
-    // }
-
-    // Ulaan tseg shiljuulex code
-    document.querySelector(".player-0-panel").classList.toggle("active");
-    document.querySelector(".player-1-panel").classList.toggle("active");
-
-    // Shoog tur alga bolgox
-    diceDom.style.display = "none";
+    switchToNextPlayer();
   }
 });
+
+// HOLD towchnii event listener
+document.querySelector(".btn-hold").addEventListener("click", function () {
+  // Ug toglogchiin tsugluulsan onoog undsen onoo deer ni nemex
+  scores[activePlayer] = scores[activePlayer] + roundScore;
+
+  //   <div class="player-score" id="score-0">10</div>
+  document.getElementById("score-" + activePlayer).textContent =
+    scores[activePlayer];
+  // Ug toglogchiin xojison esexiig shalgax
+  if (scores[activePlayer] >= 20) {
+    // Yalagchiin nernii orond WINNER gesen bicheg gargax
+    document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.add("winner");
+    document
+      .querySelector(".player-" + activePlayer + "-panel")
+      .classList.remove("active");
+  } else {
+    switchToNextPlayer();
+  }
+});
+
+// Ene function ni toglox eeljiig daraagiin toglogchruu shiljuulex
+function switchToNextPlayer() {
+  //  Toglogchiin shoo 1 buusan tul tsugluulsan toog ni 0 bolgono
+  roundScore = 0;
+  document.getElementById("current-" + activePlayer).textContent = 0;
+
+  // 1 buuwal daraagiin toglogchruugaa shoog shiljuulj tsugluulsan toonuudig ustgax
+  // xerew idewxitei toglogch 0 bwal 1 bolgoj, 1 baiwal 0 bolgox
+  activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
+  // Ulaan tseg shiljuulex code
+  document.querySelector(".player-0-panel").classList.toggle("active");
+  document.querySelector(".player-1-panel").classList.toggle("active");
+
+  // Shoog tur alga bolgox
+  diceDom.style.display = "none";
+}
