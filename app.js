@@ -1,24 +1,13 @@
 // Toglogchiin eelj xadgalax xuwisagch, 1-r toglogch 0, 2-r toglogchiig 1 geye
-var activePlayer = 0;
+var activePlayer;
 // Toglogchiin onoo tsugluulax xuwisagch
-var scores = [0, 0];
+var scores;
 // Tsugluulsan shoo xayax eeljindee tsugluulsan onoog xadgalax xuwisag
-var roundScore = 0;
-
-//Programaa exlexed yamar baixiig beldey
-
-// <div class="player-score" id="score-0">10</div>
-document.getElementById("score-0").textContent = 0;
-// <div class="player-score" id="score-1">10</div>
-document.getElementById("score-1").textContent = 0;
-
-//<div class="player-current-score" id="current-0">10</div>
-document.getElementById("current-0").textContent = 0;
-//<div class="player-current-score" id="current-1">10</div>
-document.getElementById("current-1").textContent = 0;
-
+var roundScore;
+//Shoonii Domoos yalgaj awax
 var diceDom = document.querySelector(".dice");
-diceDom.style.display = "none";
+//Programaa exlexed yamar baixiig beldey
+initGame();
 
 // Shoog shidex event listener
 document.querySelector(".btn-roll").addEventListener("click", function () {
@@ -78,3 +67,30 @@ function switchToNextPlayer() {
   // Shoog tur alga bolgox
   diceDom.style.display = "none";
 }
+
+// Shine togloom exluulex event listener
+function initGame() {
+  activePlayer = 0;
+  scores = [0, 0];
+  roundScore = 0;
+
+  document.getElementById("score-0").textContent = 0;
+  document.getElementById("score-1").textContent = 0;
+  document.getElementById("current-0").textContent = 0;
+  document.getElementById("current-1").textContent = 0;
+
+  //Toglogchiin neriig butsaan gargax
+  document.getElementById("name-0").textContent = "Player 1";
+  document.getElementById("name-1").textContent = "Player 2";
+
+  document.querySelector(".player-0-panel").classList.remove("winner");
+  document.querySelector(".player-1-panel").classList.remove("winner");
+
+  document.querySelector(".player-0-panel").classList.remove("active");
+  document.querySelector(".player-1-panel").classList.remove("active");
+
+  document.querySelector(".player-0-panel").classList.add("active");
+  diceDom.style.display = "none";
+}
+
+document.querySelector(".btn-new").addEventListener("click", initGame);
