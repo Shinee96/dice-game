@@ -4,6 +4,8 @@ var activePlayer;
 var scores;
 // Tsugluulsan shoo xayax eeljindee tsugluulsan onoog xadgalax xuwisag
 var roundScore;
+// Togloom duussan esexiig xadgalax xuwisagch
+var isNewGame = true;
 //Shoonii Domoos yalgaj awax
 var diceDom = document.querySelector(".dice");
 //Programaa exlexed yamar baixiig beldey
@@ -11,42 +13,53 @@ initGame();
 
 // Shoog shidex event listener
 document.querySelector(".btn-roll").addEventListener("click", function () {
-  // 1-6 xurtlex toog gargaj awax
-  var diceNumber = Math.floor(Math.random() * 6) + 1;
-  // Shoonii zurgiig web deer gargax
-  diceDom.style.display = "block";
-  // Buusan sanamsargvi shoonii toogoor shoonii zurag gargax
-  diceDom.src = "dice-" + diceNumber + ".png";
-  // Buusan too ni 1-ees yalgaatai bol idewxitei toglogchiin eeljiin onoog nemegdelvvx
-  if (diceNumber !== 1) {
-    // 1-ees yalgaatai buuwal toglogchiin xayasan shoonii toonuudiig nemex
-    roundScore = roundScore + diceNumber;
-    document.getElementById("current-" + activePlayer).textContent = roundScore;
+  if (isNewGame === true) {
+    // 1-6 xurtlex toog gargaj awax
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
+    // Shoonii zurgiig web deer gargax
+    diceDom.style.display = "block";
+    // Buusan sanamsargvi shoonii toogoor shoonii zurag gargax
+    diceDom.src = "dice-" + diceNumber + ".png";
+    // Buusan too ni 1-ees yalgaatai bol idewxitei toglogchiin eeljiin onoog nemegdelvvx
+    if (diceNumber !== 1) {
+      // 1-ees yalgaatai buuwal toglogchiin xayasan shoonii toonuudiig nemex
+      roundScore = roundScore + diceNumber;
+      document.getElementById(
+        "current-" + activePlayer
+      ).textContent = roundScore;
+    } else {
+      switchToNextPlayer();
+    }
   } else {
-    switchToNextPlayer();
+    alert("Togloom duusllaa");
   }
 });
 
 // HOLD towchnii event listener
 document.querySelector(".btn-hold").addEventListener("click", function () {
-  // Ug toglogchiin tsugluulsan onoog undsen onoo deer ni nemex
-  scores[activePlayer] = scores[activePlayer] + roundScore;
-
-  //   <div class="player-score" id="score-0">10</div>
-  document.getElementById("score-" + activePlayer).textContent =
-    scores[activePlayer];
-  // Ug toglogchiin xojison esexiig shalgax
-  if (scores[activePlayer] >= 20) {
-    // Yalagchiin nernii orond WINNER gesen bicheg gargax
-    document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.add("winner");
-    document
-      .querySelector(".player-" + activePlayer + "-panel")
-      .classList.remove("active");
+  if (isNewGame === true) {
+    // Ug toglogchiin tsugluulsan onoog undsen onoo deer ni nemex
+    scores[activePlayer] = scores[activePlayer] + roundScore;
+    //   <div class="player-score" id="score-0">10</div>
+    document.getElementById("score-" + activePlayer).textContent =
+      scores[activePlayer];
+    // Ug toglogchiin xojison esexiig shalgax
+    if (scores[activePlayer] >= 20) {
+      // togloomiig duussan tolowt oruulax
+      isNewGame = false;
+      // Yalagchiin nernii orond WINNER gesen bicheg gargax
+      document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+    } else {
+      switchToNextPlayer();
+    }
   } else {
-    switchToNextPlayer();
+    alert("Togloom duusllaa");
   }
 });
 
@@ -73,6 +86,7 @@ function initGame() {
   activePlayer = 0;
   scores = [0, 0];
   roundScore = 0;
+  isGameOver = false;
 
   document.getElementById("score-0").textContent = 0;
   document.getElementById("score-1").textContent = 0;
