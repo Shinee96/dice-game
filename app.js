@@ -5,7 +5,7 @@ var scores = [0, 0];
 // Tsugluulsan shoo xayax eeljindee tsugluulsan onoog xadgalax xuwisag
 var roundScore = 0;
 // Shoonii ali talaaraa buussaniig xadgalax xuwisagch mon 1-6 toonii sanamsargvi utga uusgene
-var dice = Math.floor(Math.random() * 6) + 1;
+var diceNumber = Math.floor(Math.random() * 6) + 1;
 
 // <div class="player-score" id="score-0">10</div>
 // window.document.querySelector("#score-0").textContent = dice;
@@ -14,11 +14,22 @@ var dice = Math.floor(Math.random() * 6) + 1;
 //<img src="dice-5.png" alt="Dice" class="dice" />
 
 //Programaa exlexed yamar baixiig beldey
-document.querySelector(".dice").style.display = "none";
-document.querySelector("#score-0").textContent = 0;
-document.querySelector("#score-1").textContent = 0;
+
+// <div class="player-score" id="score-0">10</div>
+document.getElementById("score-0").textContent = 0;
+// <div class="player-score" id="score-1">10</div>
+document.getElementById("score-1").textContent = 0;
+
 //<div class="player-current-score" id="current-0">10</div>
-document.querySelector("#current-0").textContent = 0;
+document.getElementById("current-0").textContent = 0;
 //<div class="player-current-score" id="current-1">10</div>
-document.querySelector("#current-1").textContent = 0;
-console.log("Shoo:" + dice);
+document.getElementById("current-1").textContent = 0;
+
+var dicDom = document.querySelector(".dice");
+dicDom.style.display = "none";
+document.querySelector(".btn-roll").addEventListener("click", function () {
+  var diceNumber = Math.floor(Math.random() * 6) + 1;
+  dicDom.style.display = "block";
+
+  dicDom.src = "dice-" + diceNumber + ".png";
+});
