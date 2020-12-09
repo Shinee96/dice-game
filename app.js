@@ -44,7 +44,7 @@ document.querySelector(".btn-hold").addEventListener("click", function () {
     document.getElementById("score-" + activePlayer).textContent =
       scores[activePlayer];
     // Ug toglogchiin xojison esexiig shalgax
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       // togloomiig duussan tolowt oruulax
       isNewGame = false;
       // Yalagchiin nernii orond WINNER gesen bicheg gargax
